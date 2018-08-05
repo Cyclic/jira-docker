@@ -14,7 +14,7 @@ COPY ./dbconfig.xml /var/atlassian/jira-home/dbconfig.xml
 RUN cd / && wget https://product-downloads.atlassian.com/software/jira/downloads/atlassian-jira-software-7.10.0-x64.bin \
 && sha256sum -c check.gpr \
 && chmod a+x atlassian-jira-software-7.10.0-x64.bin \
-&& cd / && ./atlassian-jira-software-7.10.0-x64.bin < ./installjira \
+&& cd / && if [ ! -d /var/atlassian/jira-app ]; then ./atlassian-jira-software-7.10.0-x64.bin < ./installjira; fi  \
 && rm /atlassian-jira-software-7.10.0-x64.bin \
 && mkdir /home/jira-app-backup/ && cp -r /var/atlassian/jira-app/* /home/jira-app-backup/ \
 && mkdir /home/jira-home-backup/ && cp -r /var/atlassian/jira-home/* /home/jira-home-backup/
